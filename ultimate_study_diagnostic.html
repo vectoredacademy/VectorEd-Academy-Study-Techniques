@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VectorEd Academy - Ultimate Study Technique Diagnostic</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome 6.4.0 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandNavy: '#0B192C',
+            brandDarkCard: '#1E293B',
+            brandGold: '#F5A623',
+            brandGoldHover: '#D98E19',
+            brandLightCard: '#EBF3FE',
+            brandSoftWhite: '#FCFAF2'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0B192C;
+      color: #F8FAFC;
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    b, strong {
+      font-weight: 800 !important;
+      color: #FFFFFF !important;
+    }
+    i, em {
+      font-style: italic !important;
+    }
+    .amber-gradient-btn {
+      background: linear-gradient(135deg, #FFB200 0%, #F5A623 100%);
+      color: #0F172A;
+      transition: all 0.2s ease-in-out;
+    }
+    .amber-gradient-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #F5A623 0%, #E09000 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+    }
+    .amber-gradient-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .fb-blue-btn {
+      background: linear-gradient(135deg, #1877F2 0%, #0d65d9 100%);
+      color: #FFFFFF;
+      transition: all 0.2s ease-in-out;
+    }
+    .fb-blue-btn:hover {
+      background: linear-gradient(135deg, #166fe5 0%, #0a54b8 100%);
+      box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
+    }
+    .emerald-btn {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: #FFFFFF;
+      transition: all 0.2s ease-in-out;
+    }
+    .emerald-btn:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+    .card-glass {
+      background: rgba(30, 41, 59, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .option-card {
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+    }
+    .option-card:hover {
+      border-color: #F5A623;
+      background-color: rgba(245, 166, 35, 0.08);
+    }
+    .option-card.selected {
+      border-color: #F5A623;
+      background-color: rgba(245, 166, 35, 0.18);
+      box-shadow: 0 0 12px rgba(245, 166, 35, 0.25);
+    }
+    .formatted-content {
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-navy-900">
+
+  <!-- ================= HEADER SECTION ================= -->
+  <header class="w-full bg-[#0B192C] border-b border-slate-800 sticky top-0 z-50 px-3 sm:px-4 py-3 shadow-md">
+    <div class="max-w-xl mx-auto flex items-center justify-between">
+      <!-- Logo and Title -->
+      <div class="flex items-center space-x-2.5 sm:space-x-3">
+        <img src="https://iili.io/ndL8PQj.png" alt="VectorEd Academy Logo" class="h-8 sm:h-9 w-auto object-contain">
+        <div>
+          <div class="font-display text-base sm:text-lg font-bold tracking-tight text-white leading-none">
+            Vector<span class="text-amber-500">Ed</span> Academy
+          </div>
+          <div class="text-[10px] text-emerald-400 font-medium flex items-center space-x-1 mt-0.5">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="headerCloudStatus">☁️ Cloud Sync: Active</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons: Admin & Language Toggle -->
+      <div class="flex items-center space-x-1.5 sm:space-x-2">
+        <button onclick="openAdminModal()" class="flex items-center space-x-1 bg-slate-800/90 border border-slate-700 hover:border-amber-500/80 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-300 transition-colors">
+          <i class="fa-solid fa-lock text-amber-500 text-[11px]"></i>
+          <span class="hidden sm:inline">Admin</span>
+        </button>
+        <button id="langToggleBtn" onclick="toggleLanguage()" class="flex items-center space-x-1.5 bg-slate-800 border border-slate-700 hover:border-amber-500 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold text-slate-200 transition-colors">
+          <i class="fa-solid fa-globe text-amber-500"></i>
+          <span id="langToggleText">EN | Taglish</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main class="flex-grow flex items-center justify-center p-3 sm:p-4">
+    <div class="w-full max-w-md sm:max-w-xl mx-auto">
+
+      <!-- SCREEN 1: LEAD CAPTURE FORM -->
+      <div id="screen1" class="card-glass rounded-2xl p-4 sm:p-8 shadow-2xl">
+        <div class="text-center mb-5">
+          <span class="inline-block px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-2">
+            <i class="fa-solid fa-graduation-cap mr-1"></i> Student Diagnostic Tool
+          </span>
+          <h1 id="screen1Title" class="font-display text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Ultimate Study Technique Diagnostic
+          </h1>
+          <p id="screen1Subtitle" class="text-slate-300 text-xs sm:text-sm mt-1.5">
+            Identify your core learning bottlenecks and unlock the exact study methods tailored to your academic needs.
+          </p>
+        </div>
+
+        <form id="leadForm" class="space-y-3.5" onsubmit="handleFormSubmit(event)">
+          <div>
+            <label for="fullName" class="block text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1">
+              Full Name <span class="text-amber-500">*</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                <i class="fa-regular fa-user"></i>
+              </span>
+              <input type="text" id="fullName" placeholder="e.g. Juan Dela Cruz" oninput="validateForm()" class="w-full pl-9 pr-4 py-2.5 bg-slate-900/90 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition">
+            </div>
+          </div>
+
+          <div>
+            <label for="email" class="block text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1">
+              Email Address <span class="text-amber-500">*</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <input type="email" id="email" placeholder="student@university.edu.ph" oninput="validateForm()" class="w-full pl-9 pr-4 py-2.5 bg-slate-900/90 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition">
+            </div>
+            <p id="emailError" class="text-[11px] text-rose-400 mt-1 hidden">Please enter a valid email address.</p>
+          </div>
+
+          <div>
+            <label for="phone" class="block text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1">
+              Cellphone Number <span class="text-amber-500">* (09XXXXXXXXX - 11 digits)</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+              </span>
+              <input type="tel" id="phone" maxlength="11" placeholder="09171234567" oninput="validateForm()" class="w-full pl-9 pr-4 py-2.5 bg-slate-900/90 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition">
+            </div>
+            <p id="phoneError" class="text-[11px] text-rose-400 mt-1 hidden">Must start with 09 and be exactly 11 digits.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div>
+              <label for="university" class="block text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                University / College <span class="text-amber-500">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                  <i class="fa-solid fa-building-columns"></i>
+                </span>
+                <input type="text" id="university" placeholder="e.g. DLSU, Mapua, UST" oninput="validateForm()" class="w-full pl-9 pr-4 py-2.5 bg-slate-900/90 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition">
+              </div>
+            </div>
+
+            <div>
+              <label for="yearLevel" class="block text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                Year Level <span class="text-amber-500">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                  <i class="fa-solid fa-layer-group"></i>
+                </span>
+                <select id="yearLevel" onchange="validateForm()" class="w-full pl-9 pr-4 py-2.5 bg-slate-900/90 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500 transition appearance-none">
+                  <option value="" disabled selected>Select Year</option>
+                  <option value="Freshman">Freshman (1st Year)</option>
+                  <option value="Sophomore">Sophomore (2nd Year)</option>
+                  <option value="Junior">Junior (3rd Year)</option>
+                  <option value="Senior">Senior (4th Year+)</option>
+                </select>
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                  <i class="fa-solid fa-chevron-down text-xs"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="difficultSubjects" class="block text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1">
+              Difficult Subjects for You <span class="text-amber-500">*</span>
+            </label>
+            <textarea id="difficultSubjects" rows="2" placeholder="e.g. Calculus, Physics, Accounting" oninput="validateForm()" class="w-full px-3 py-2 bg-slate-900/90 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition resize-none"></textarea>
+          </div>
+
+          <div class="pt-2">
+            <button type="submit" id="startQuizBtn" disabled class="w-full py-3.5 px-6 rounded-xl font-bold text-slate-950 text-sm sm:text-base amber-gradient-btn shadow-lg flex items-center justify-center space-x-2">
+              <span id="startBtnText">Start Diagnostic Quiz 🚀</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- SCREEN 2: STEP-BY-STEP DIAGNOSTIC QUIZ -->
+      <div id="screen2" class="card-glass rounded-2xl p-4 sm:p-8 shadow-2xl hidden">
+        <div class="mb-5">
+          <div class="flex justify-between items-center mb-1.5">
+            <span id="quizCounterText" class="text-xs font-semibold uppercase tracking-wider text-amber-400">
+              Question 1 of 5
+            </span>
+            <span id="progressPercent" class="text-xs font-bold text-slate-400">
+              20%
+            </span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700">
+            <div id="progressBar" class="bg-amber-500 h-2 rounded-full transition-all duration-300" style="width: 20%"></div>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <h2 id="questionCategory" class="text-[11px] font-bold text-amber-400/90 uppercase tracking-widest mb-1">
+            Category Name
+          </h2>
+          <h3 id="questionText" class="text-base sm:text-lg font-bold text-white leading-snug formatted-content">
+            Question prompt text will appear here...
+          </h3>
+        </div>
+
+        <div id="optionsContainer" class="space-y-2.5 mb-6">
+          <!-- Dynamic Options rendered via JS -->
+        </div>
+
+        <div class="flex items-center justify-between pt-3 border-t border-slate-800">
+          <button id="prevBtn" onclick="prevQuestion()" class="px-3.5 py-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 text-xs sm:text-sm font-semibold hover:bg-slate-700 transition disabled:opacity-30 disabled:cursor-not-allowed">
+            <i class="fa-solid fa-arrow-left mr-1"></i> Back
+          </button>
+          
+          <button id="nextBtn" onclick="nextQuestion()" disabled class="px-5 py-2.5 rounded-lg amber-gradient-btn text-slate-950 text-xs sm:text-sm font-bold shadow transition flex items-center space-x-2">
+            <span id="nextBtnText">Next Question</span>
+            <i id="nextBtnIcon" class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: 2-COLUMN RESULT & CTA SECTION -->
+      <div id="screen3" class="card-glass rounded-2xl p-4 sm:p-8 shadow-2xl hidden">
+        
+        <div class="text-center mb-5">
+          <span class="inline-block px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-2">
+            <i class="fa-solid fa-circle-check mr-1"></i> Diagnostic Completed
+          </span>
+          <h2 class="font-display text-xl sm:text-2xl font-bold text-white">
+            Your Diagnostic Archetype Profile
+          </h2>
+        </div>
+
+        <!-- NEW 2-COLUMN ARCHETYPE LAYOUT -->
+        <div class="bg-slate-900/90 border border-slate-700 rounded-xl overflow-hidden mb-5 shadow-inner">
+          
+          <!-- Top Section: Emoji, Badge, Title, Summary -->
+          <div class="p-4 sm:p-5 text-center border-b border-slate-800">
+            <div id="archetypeEmoji" class="text-5xl sm:text-6xl mb-3 filter drop-shadow inline-block">🧽</div>
+            <div>
+              <span id="archetypeBadge" class="px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-amber-500 text-slate-950 inline-block mb-2">
+                Primary Archetype
+              </span>
+            </div>
+            <h3 id="archetypeTitle" class="text-xl sm:text-2xl font-black text-amber-400 font-display mb-3">
+              Title Goes Here
+            </h3>
+            <div id="archetypeSummary" class="text-xs sm:text-sm text-slate-200 leading-relaxed bg-slate-800/50 p-3 sm:p-4 rounded-xl border border-slate-700/50 formatted-content max-w-lg mx-auto">
+              Summary text loading...
+            </div>
+          </div>
+
+          <!-- Bottom Section: The 2-Column Grid for Study Techniques -->
+          <div class="p-4 sm:p-5 bg-amber-500/5">
+            <h4 class="text-[11px] font-bold uppercase tracking-wider text-amber-400 flex items-center justify-center mb-4 text-center">
+              <i class="fa-solid fa-layer-group mr-1.5"></i> Your Recommended Study Protocol
+            </h4>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <!-- Technique Column 1 -->
+              <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-4 flex flex-col items-center text-center shadow-lg transition hover:border-amber-500/50">
+                <img src="https://placehold.co/150x150/1E293B/F5A623?text=Method+1" alt="Technique 1" class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg mb-3 shadow-md border border-slate-600">
+                <h5 id="tech1Title" class="font-bold text-white text-sm mb-2">Technique 1 Title</h5>
+                <p id="tech1Desc" class="text-xs text-slate-300 leading-relaxed formatted-content">Technique 1 description goes here.</p>
+              </div>
+
+              <!-- Technique Column 2 -->
+              <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-4 flex flex-col items-center text-center shadow-lg transition hover:border-amber-500/50">
+                <img src="https://placehold.co/150x150/1E293B/F5A623?text=Method+2" alt="Technique 2" class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg mb-3 shadow-md border border-slate-600">
+                <h5 id="tech2Title" class="font-bold text-white text-sm mb-2">Technique 2 Title</h5>
+                <p id="tech2Desc" class="text-xs text-slate-300 leading-relaxed formatted-content">Technique 2 description goes here.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic FB CONNECT CTA -->
+        <div class="mb-5">
+          <a id="fbConnectBtn" href="https://www.facebook.com/johnres.hipe.58/" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm fb-blue-btn shadow-lg flex items-center justify-center space-x-2 text-center">
+            <i class="fa-brands fa-facebook-f text-base"></i>
+            <span id="fbConnectText">Connect with Engr. Johnres Hipe on FB for your diagnostic breakdown</span>
+          </a>
+        </div>
+
+        <!-- DYNAMIC HIGH YIELD ENERGY MASTERPACK & CURIOSITY TEASER CARD -->
+        <div id="masterpackContainer" class="bg-gradient-to-br from-slate-800 to-slate-900 border-2 border-amber-500/60 rounded-xl p-4 sm:p-5 shadow-xl text-center space-y-3 mb-4">
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-amber-500/20 text-amber-400">
+            <i class="fa-solid fa-bolt text-lg"></i>
+          </div>
+          <h3 id="masterpackTitle" class="text-base sm:text-lg font-extrabold text-white font-display">
+            High Yield Energy MasterPack 🚀
+          </h3>
+          <div id="masterpackInstruction" class="text-xs sm:text-sm text-slate-200 leading-relaxed max-w-sm mx-auto formatted-content">
+            To claim your free VectorEd formula vaults, prerequisite cheat sheets, and board strategy materials, <strong class="text-amber-400">Message Our FB Page</strong> and type <span class="bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-mono font-bold">"DIAGNOSTICS"</span>.
+          </div>
+
+          <!-- CURIOSITY HOOK / SPECIAL OPPORTUNITY TEASER -->
+          <div id="teaserBox" class="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg text-left text-xs text-amber-200 flex items-start space-x-2">
+            <i class="fa-solid fa-gift text-amber-400 text-base mt-0.5 flex-shrink-0"></i>
+            <div>
+              <strong id="teaserTitle" class="text-amber-300 block font-semibold mb-0.5">🎁 Exclusive Student Opportunity Inside:</strong>
+              <span id="teaserText" class="formatted-content">We have a special, limited-time 1-on-1 academic mentorship opportunity waiting for event attendees! Message our FB page now so we can share this special privilege with you.</span>
+            </div>
+          </div>
+
+          <!-- Toast Notification for Copy Action -->
+          <div id="copyToast" class="hidden bg-emerald-500/20 border border-emerald-500/50 text-emerald-300 text-xs py-2 px-3 rounded-lg font-semibold animate-pulse">
+            <i class="fa-solid fa-check-circle mr-1"></i> Code copied! Opening FB Page...
+          </div>
+
+          <div class="pt-1">
+            <a id="actionBtn" href="https://www.facebook.com/share/1NnxduVw9U/" target="_blank" rel="noopener noreferrer" onclick="copyAndOpenFB(event)" class="w-full py-3 px-5 rounded-xl font-extrabold text-xs sm:text-sm amber-gradient-btn shadow flex items-center justify-center space-x-2">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span id="actionBtnText">Copy "DIAGNOSTICS" & Message Our Page</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Restart Diagnostic Link -->
+        <div class="text-center pt-2">
+          <button id="retakeBtn" onclick="resetDiagnostic()" class="text-xs text-slate-400 hover:text-amber-400 underline transition">
+            <i class="fa-solid fa-rotate-left mr-1"></i> Retake Diagnostic Test
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================= ADMIN MODAL ================= -->
+  <div id="adminModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-sliders text-amber-500"></i>
+          <h3 class="font-display font-bold text-white text-base">VectorEd Admin Portal</h3>
+        </div>
+        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white text-lg px-2">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-4 sm:p-6 overflow-y-auto space-y-5 text-xs sm:text-sm text-slate-200">
+        
+        <!-- View 1: Admin Login View -->
+        <div id="adminLoginView" class="space-y-4">
+          <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-3">
+            <h4 class="font-bold text-white text-sm">Administrator Authentication</h4>
+            <p class="text-slate-400 text-xs">Enter your administrator password to edit real-time questions, options, archetypes, CTAs, and layout settings.</p>
+            <div>
+              <label class="block text-[11px] text-slate-400 uppercase font-semibold mb-1">Admin Password</label>
+              <input type="password" id="adminPasswordInput" placeholder="Enter Admin Password" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-xs focus:outline-none focus:border-amber-500">
+            </div>
+            <p id="adminAuthError" class="text-xs text-rose-400 hidden">Incorrect password. Please try again.</p>
+            <button onclick="authenticateAdmin()" class="w-full py-2.5 rounded-lg amber-gradient-btn text-slate-950 font-bold">
+              Authenticate & Access
+            </button>
+          </div>
+        </div>
+
+        <!-- View 2: Admin Dashboard (Content Editor & Settings) -->
+        <div id="adminDashboardView" class="hidden space-y-6">
+          <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-2">
+            <div class="flex justify-between items-center">
+              <h4 class="font-bold text-amber-400 text-xs sm:text-sm flex items-center">
+                <i class="fa-solid fa-cloud-check mr-1.5 text-emerald-400"></i> Cloud Database Connection
+              </h4>
+              <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-mono">Google Sheets Active</span>
+            </div>
+            <p class="text-slate-400 text-xs">Test sending a sample ping lead to verify Google Sheets Web App connectivity in real-time.</p>
+            <div class="pt-1 flex items-center space-x-2">
+              <button onclick="testCloudConnection()" class="py-2 px-4 rounded-lg bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white font-bold text-xs transition flex items-center">
+                <i class="fa-solid fa-paper-plane mr-1.5 text-amber-400"></i> Send Test Entry to GSheets
+              </button>
+              <span id="adminTestStatus" class="text-xs font-mono text-slate-400 hidden"></span>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-3">
+            <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+              <h4 class="font-bold text-amber-400 text-xs sm:text-sm">🔐 Administrator Security Settings</h4>
+              <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-mono">Status: Authenticated</span>
+            </div>
+            <div id="secQuestionStep" class="space-y-2">
+              <label class="block text-xs font-semibold text-slate-300">
+                Security Question: <span class="text-amber-400">When was VectorEd Academy Founded?</span>
+              </label>
+              <input type="text" id="secQuestionAnswer" placeholder="Enter answer..." class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-xs focus:outline-none focus:border-amber-500">
+              <p id="secQuestionError" class="text-[11px] text-rose-400 hidden">Incorrect answer. Please try again.</p>
+              <button onclick="verifySecurityQuestion()" class="py-2 px-4 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs hover:bg-amber-400 transition">
+                Verify Answer to Change Password
+              </button>
+            </div>
+            <div id="changePwStep" class="hidden space-y-2 pt-2 border-t border-slate-700/60">
+              <label class="block text-xs font-semibold text-slate-300">New Admin Password</label>
+              <input type="password" id="newAdminPassword" placeholder="Enter new admin password" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-xs focus:outline-none focus:border-amber-500">
+              <p id="pwChangeSuccess" class="text-[11px] text-emerald-400 hidden">Password updated successfully!</p>
+              <button onclick="saveNewPassword()" class="py-2 px-4 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition">
+                Save & Update Password
+              </button>
+            </div>
+          </div>
+
+          <!-- Real-time Diagnostic Content Editor -->
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <h4 class="font-bold text-white text-sm">📝 Edit Live Diagnostic Questions & Options</h4>
+              <button onclick="resetContentToDefault()" class="text-xs text-rose-400 hover:underline">
+                Reset All Content to Default
+              </button>
+            </div>
+
+            <div id="adminQuestionsEditor" class="space-y-4">
+              <!-- Rendered dynamically in JS -->
+            </div>
+
+            <!-- Archetype Details Live Editor -->
+            <div class="pt-4 border-t border-slate-700/80 space-y-4">
+              <h4 class="font-bold text-amber-400 text-xs sm:text-sm">🏆 Edit Archetype Summaries & Techniques</h4>
+              <div id="adminArchetypeEditor" class="space-y-4">
+                <!-- Rendered dynamically in JS -->
+              </div>
+            </div>
+
+            <!-- CUSTOMIZABLE RESULT SCREEN CTAS -->
+            <div class="pt-4 border-t border-slate-700/80 space-y-4">
+              <h4 class="font-bold text-amber-400 text-xs sm:text-sm">📢 Edit Result Screen CTAs & Content</h4>
+              
+              <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2">
+                <div class="font-bold text-xs text-slate-300 flex items-center justify-between">
+                  <span>Connect Button (FB Engr. Johnres)</span>
+                  <span class="text-[10px] text-amber-400 font-mono">Top CTA</span>
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Button Label Text</label>
+                  <input type="text" id="admin_fb_connect_text" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Target Facebook URL</label>
+                  <input type="text" id="admin_fb_connect_url" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">
+                </div>
+              </div>
+
+              <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2">
+                <div class="font-bold text-xs text-slate-300 flex items-center justify-between">
+                  <span>High Yield MasterPack Box</span>
+                  <span class="text-[10px] text-amber-400 font-mono">Main Reward Card</span>
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">MasterPack Title</label>
+                  <input type="text" id="admin_masterpack_title" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Instruction Text (Copy code instructions)</label>
+                  <textarea id="admin_masterpack_instruction" rows="2" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500"></textarea>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Teaser Box Title</label>
+                    <input type="text" id="admin_teaser_title" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">
+                  </div>
+                  <div>
+                    <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Teaser Description</label>
+                    <textarea id="admin_teaser_text" rows="2" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2">
+                <div class="font-bold text-xs text-slate-300 flex items-center justify-between">
+                  <span>Primary Message & Copy CTA Button</span>
+                  <span class="text-[10px] text-amber-400 font-mono">FB Page Action</span>
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Action Button Label Text</label>
+                  <input type="text" id="admin_action_btn_text" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Target FB Page Share URL</label>
+                  <input type="text" id="admin_action_btn_url" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Retake Quiz Button Label</label>
+                  <input type="text" id="admin_retake_btn_text" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 flex flex-col sm:flex-row justify-between items-center gap-2 border-t border-slate-800">
+              <span id="adminSaveStatus" class="text-xs font-mono text-amber-400 hidden"></span>
+              <button onclick="saveAdminContentChanges()" class="w-full sm:w-auto px-5 py-2.5 rounded-lg amber-gradient-btn text-slate-950 font-bold text-xs shadow">
+                Save All Content Changes Live 🚀
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="w-full bg-[#0B192C] border-t border-slate-800/80 py-3 px-4 text-center text-[11px] text-slate-500">
+    <p>© 2026 VectorEd Academy. All rights reserved. Diagnostic Systems.</p>
+  </footer>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    /* ========================================================
+       1. GOOGLE APPS SCRIPT DATABASE ENDPOINT
+       ======================================================== */
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxoujOMshXCV-tftYWPYBxD5oSe23StQKZf8FtnNrCFLHKF4FNvf-ZNlIpjBDEjFL0R/exec";
+
+    /* ========================================================
+       2. STATE MANAGEMENT & ADMIN CONFIG
+       ======================================================== */
+    let currentLang = 'EN';
+    let currentQuestionIndex = 0;
+    let selectedAnswers = [null, null, null, null, null]; 
+    let shuffledQuestions = [];
+    let leadDetails = { fullName: '', email: '', phone: '', university: '', yearLevel: '', difficultSubjects: '' };
+    let calculatedArchetypeKey = null;
+    let isEnrolledMode = false;
+
+    // Use specific study local storage key to prevent override from other tools
+    let adminPassword = localStorage.getItem('ved_study_admin_pw') || '123456';
+    let isAdminAuthenticated = false;
+
+    /* ========================================================
+       3. 5-OPTION QUESTION DATA (EN & TL)
+       ======================================================== */
+    const defaultQuizQuestions = [
+      {
+        id: 1,
+        category: { EN: "The Study Session Start", TL: "Ang Simula ng Pag-aaral" },
+        questionText: {
+          EN: "You sit down to study for a major upcoming exam. What is your immediate first step?",
+          TL: "Uupo ka na para mag-aral para sa major exam. Ano ang unang-unang gagawin mo?"
+        },
+        options: [
+          { key: "A", text: { EN: "I stare at the massive syllabus, feel overwhelmed, and struggle to decide which subject to tackle first.", TL: "Nakatitig sa napakahabang syllabus, nade-demotivate, at hirap magdesisyon kung anong subject ang uunahin." } },
+          { key: "B", text: { EN: "I open my notebook and start re-reading and highlighting my lecture notes from the past month.", TL: "Binubuksan ko ang notebook at nagbabasa at nagha-highlight ng lecture notes mula pa nung nakaraang buwan." } },
+          { key: "C", text: { EN: "I try to memorize the complex formulas, but I don't really understand how they were derived.", TL: "Pinipilit kong kabisaduhin ang mga formulas, pero hindi ko talaga naiintindihan kung paano ito nakuha." } },
+          { key: "D", text: { EN: "I try to solve practice problems, but I feel incredibly anxious about whether I'm doing them right.", TL: "Nagso-solve agad ng practice problems, pero sobrang kinakabahan kung tama ba talaga yung ginagawa ko." } }
+        ]
+      },
+      {
+        id: 2,
+        category: { EN: "The Retention Reality Check", TL: "Memorya at Pagtatanda" },
+        questionText: {
+          EN: "Three days after a really great, highly productive study session, how much do you actually remember?",
+          TL: "Tatlong araw matapos ang isang napakagandang study session, gaano karami ang natatandaan mo?"
+        },
+        options: [
+          { key: "A", text: { EN: "Not much, because I usually have to drop studying for that subject to rush a different project deadline.", TL: "Kaunti lang, dahil madalas kinakailangan kong itigil ang pag-aaral para maghabol ng deadline sa ibang project." } },
+          { key: "B", text: { EN: "I recognize the concepts if I look at my notes, but I can't solve a problem from scratch without checking them.", TL: "Pamilyar ang concepts kapag tiningnan sa notes, pero hindi ako makapag-solve from scratch na walang kodigo." } },
+          { key: "C", text: { EN: "I remember the final formulas, but I forgot the underlying theories that explain why we use them.", TL: "Naaalala ko ang formula, pero nakalimutan ko na yung theory kung bakit yun ang ginagamit natin." } },
+          { key: "D", text: { EN: "I remember the steps, but I miss small, critical details when trying to write them down quickly.", TL: "Kabisado ko yung steps, pero may namimiss akong maliliit at kritikal na detalye kapag mabilisang nagsusulat." } }
+        ]
+      },
+      {
+        id: 3,
+        category: { EN: "The Lecture Experience", TL: "Karanasan sa Klase" },
+        questionText: {
+          EN: "During a fast-paced, heavy calculation lecture, what is usually happening in your head?",
+          TL: "Habang mabilisang nagtuturo at nagko-compute si Prof, ano ang tumatakbo sa isip mo?"
+        },
+        options: [
+          { key: "A", text: { EN: "I'm distracted, thinking about all the other assignments I need to finish by midnight.", TL: "Lutang at distracted, iniisip ang lahat ng iba pang requirements na kailangan kong tapusin mamayang gabi." } },
+          { key: "B", text: { EN: "I am frantically copying exactly what the professor writes on the board, but not really processing what it means.", TL: "Natataranta akong kopyahin lahat ng nakasulat sa board, pero hindi ko pino-process kung ano ang ibig sabihin nun." } },
+          { key: "C", text: { EN: "I get lost 15 minutes in because I don't understand the foundational concepts they are building upon.", TL: "Naliligaw na ako 15 minutes pa lang, dahil hindi ko maintindihan yung basic concepts na pinaghuhugutan nila." } },
+          { key: "D", text: { EN: "I understand everything perfectly in class, but I worry the exam questions will look completely different.", TL: "Gets ko lahat sa klase, pero nag-aalala ako na baka sobrang layo ng itsura ng mga lalabas na tanong sa exam." } }
+        ]
+      },
+      {
+        id: 4,
+        category: { EN: "Exam Eve Strategy", TL: "Gabi Bago Ang Exam" },
+        questionText: {
+          EN: "It's 10:00 PM the night before a major exam. What does your study routine look like?",
+          TL: "10:00 PM na ng gabi bago ang major exam. Ano ang hitsura ng review routine mo?"
+        },
+        options: [
+          { key: "A", text: { EN: "Trying to cram 4 weeks of material into a single night fueled by energy drinks.", TL: "Nagka-cram at pinagkakasya ang 4 na linggong coverage sa isang gabi habang umiinom ng energy drinks." } },
+          { key: "B", text: { EN: "Re-reading the textbook chapters for the third time hoping the information finally sticks.", TL: "Binabasa nang paulit-ulit ang textbook at umaasang papasok at didikit na sa utak ko ang impormasyon." } },
+          { key: "C", text: { EN: "Watching YouTube tutorials hoping for a 'lightbulb' moment to finally understand a tough topic.", TL: "Nanonood ng YouTube tutorials at umaasang magkaka-'lightbulb' moment para maintindihan ang topic." } },
+          { key: "D", text: { EN: "Endlessly searching for old test papers to see the 'tricks' the professor might use.", TL: "Walang katapusang naghahanap ng past exams para makita yung mga 'tricks' na pwedeng ilabas ni Prof." } }
+        ]
+      },
+      {
+        id: 5,
+        category: { EN: "The Core Bottleneck", TL: "Pinakamalaking Balakid" },
+        questionText: {
+          EN: "Be honest: What is the single biggest factor hurting your academic performance right now?",
+          TL: "Tapatan lang: Ano ang pinakamalaking hadlang sa academic performance mo ngayon?"
+        },
+        options: [
+          { key: "A", text: { EN: "Time management, procrastination, and balancing an overloaded schedule.", TL: "Time management, pag-cram, at pag-balance ng napakaraming schedule at requirements." } },
+          { key: "B", text: { EN: "Forgetting information I spent hours trying to memorize just a few days ago.", TL: "Madaling makalimutan yung impormasyon na inaral at kinabisado ko nang ilang oras nung nakaraan." } },
+          { key: "C", text: { EN: "Feeling like the engineering concepts are just too abstract or difficult to grasp deeply.", TL: "Pakiramdam ko sobrang hirap at abstract ng concepts kaya hindi ko siya maintindihan nang malalim." } },
+          { key: "D", text: { EN: "Freezing up, blanking out, or making silly errors when under the pressure of a ticking clock.", TL: "Nabla-blanko, nagfo-freeze, o nagkakamali ng maliit (careless errors) kapag pressured na sa timer ng exam." } }
+        ]
+      }
+    ];
+
+    let quizQuestions = JSON.parse(localStorage.getItem('ved_study_quiz_questions')) || defaultQuizQuestions;
+
+    /* ========================================================
+       4. 4 ARCHETYPE PROFILES DATA & 2-COLUMN TECHNIQUES
+       ======================================================== */
+    const defaultArchetypeData = {
+      A: {
+        title: { EN: "The Overwhelmed Crammer ⏳", TL: "The Overwhelmed Crammer ⏳" },
+        emoji: "⏳",
+        summary: {
+          EN: "You have too much to study and not enough time. Your bottleneck isn't intelligence—it is time management, procrastination, and trying to learn everything at once.",
+          TL: "Sobrang dami mong kailangang aralin at kulang sa oras. Hindi ka kulang sa talino—nagkakaproblema ka sa time management at pagcram ng sabay-sabay."
+        },
+        tech1Title: { EN: "The Pareto Principle", TL: "Pareto Principle (80/20)" },
+        tech1Desc: { 
+          EN: "Stop reading linearly. Identify the 20% of core concepts that will yield 80% of your exam grade (like foundational theorems).",
+          TL: "Hanapin ang 20% ng core concepts at formulas na magbibigay ng 80% ng score sa exam para hindi ka na nag-aaksaya ng oras."
+        },
+        tech2Title: { EN: "The Pomodoro Technique", TL: "Pomodoro Technique" },
+        tech2Desc: {
+          EN: "Conquer those high-yield topics using 25 minutes of intense focus followed by 5 minutes of rest to prevent cognitive burnout.",
+          TL: "Gamitin ang 25 minutes na focus at 5 minutes rest para aralin ang mga high-yield topics nang walang burnout."
+        }
+      },
+      B: {
+        title: { EN: "The Passive Reviewer 📖", TL: "The Passive Reviewer 📖" },
+        emoji: "📖",
+        summary: {
+          EN: "You understand the notes when you read them, but they disappear by exam day. Highlighting and re-reading gives you the 'illusion of competence' without real retention.",
+          TL: "Naiintindihan mo ang notes habang binabasa, pero nakakalimutan din bago mag-exam. Nagbibigay lang ng 'illusion' ang pag-highlight na alam mo na ang topic."
+        },
+        tech1Title: { EN: "Active Recall", TL: "Active Recall" },
+        tech1Desc: { 
+          EN: "Ditch the highlighter. Force your brain to retrieve information and solve problems from scratch without looking at the material.",
+          TL: "Tigilan ang puro highlight. Pilitin ang utak na alalahanin at mag-solve ng problema mula sa memorya nang walang kodigo."
+        },
+        tech2Title: { EN: "Spaced Rehearsal", TL: "Spaced Rehearsal" },
+        tech2Desc: {
+          EN: "Review those concepts at increasing intervals (1 day, 3 days, 1 week) to permanently lock formulas into your long-term memory.",
+          TL: "I-review ang mga concepts sa lumalaking intervals (1 araw, 3 araw, 1 linggo) para mai-lock ito nang permanente sa memorya."
+        }
+      },
+      C: {
+        title: { EN: "The Concept Struggler 🧩", TL: "The Concept Struggler 🧩" },
+        emoji: "🧩",
+        summary: {
+          EN: "Complex STEM topics feel like a foreign language. You are trying to memorize formulas without understanding the fundamental rules of how they are built.",
+          TL: "Parang ibang lenggwahe ang mga STEM topics. Pinipilit mong kabisaduhin ang formula nang hindi mo lubos naiintindihan kung paano ito ginawa."
+        },
+        tech1Title: { EN: "Priming", TL: "Priming" },
+        tech1Desc: { 
+          EN: "Skim tomorrow's lecture materials for just 10 minutes tonight so your brain already recognizes the vocabulary and structure.",
+          TL: "I-skim ang lecture material bukas ng 10 minuto ngayong gabi para mas mabilis ma-absorb ng utak ang mga bagong terms."
+        },
+        tech2Title: { EN: "Feynman Technique", TL: "Feynman Technique" },
+        tech2Desc: {
+          EN: "Try teaching the concept simply to a non-engineer on a piece of paper. If you get stuck, that’s exactly where your knowledge gap is.",
+          TL: "Subukang ituro ang concept ng simple sa isang blankong papel. Kung saan ka nahirapan, doon mismo ang weakness mo."
+        }
+      },
+      D: {
+        title: { EN: "The Exam Panicker 😰", TL: "The Exam Panicker 😰" },
+        emoji: "😰",
+        summary: {
+          EN: "You study hard and know the material, but you blank out when the timer starts. Exam pressure and unexpected question formats are breaking your execution.",
+          TL: "Nag-aral ka nang mabuti at alam mo ang material, pero nabla-blanko ka kapag nagsimula na ang timer dahil sa kaba at pressure."
+        },
+        tech1Title: { EN: "The Blurting Method", TL: "The Blurting Method" },
+        tech1Desc: { 
+          EN: "Build exam resilience by writing down everything you know about a topic on a blank sheet from memory, then checking notes to fill gaps.",
+          TL: "Isulat lahat ng alam mo tungkol sa topic sa isang blankong papel nang hindi nakatingin sa notes, pagkatapos ay i-check at punan ang kulang."
+        },
+        tech2Title: { EN: "Past Exams Simulation", TL: "Past Exams Simulation" },
+        tech2Desc: {
+          EN: "Drill old test papers under strict time limits to build pattern recognition for how professors twist standard questions.",
+          TL: "Mag-practice sa old test papers nang may time limit para masanay ang utak mo sa pressure at tricks ni Prof."
+        }
+      }
+    };
+
+    let archetypeData = JSON.parse(localStorage.getItem('ved_study_archetype_data')) || defaultArchetypeData;
+
+    // Default CTA & Result Screen Configs
+    const defaultFbCtaConfig = {
+      text: "Connect with Engr. Johnres Hipe on FB for your diagnostic breakdown",
+      url: "https://www.facebook.com/johnres.hipe.58/"
+    };
+    const defaultMasterpackConfig = {
+      title: "High Yield Energy MasterPack 🚀",
+      instruction: "To claim your free VectorEd formula vaults, prerequisite cheat sheets, and board strategy materials, <strong class=\"text-amber-400\">Message Our FB Page</strong> and type <span class=\"bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-mono font-bold\">\"DIAGNOSTICS\"</span>."
+    };
+    const defaultTeaserConfig = {
+      title: "🎁 Exclusive Student Opportunity Inside:",
+      text: "We have a special, limited-time 1-on-1 academic mentorship opportunity waiting for event attendees! Message our FB page now so we can share this special privilege with you."
+    };
+    const defaultActionBtnConfig = {
+      text: "Copy \"DIAGNOSTICS\" & Message Our Page",
+      url: "https://www.facebook.com/share/1NnxduVw9U/"
+    };
+    const defaultRetakeBtnConfig = {
+      text: "Retake Diagnostic Test"
+    };
+
+    let fbCtaConfig = JSON.parse(localStorage.getItem('ved_study_fb_cta_config')) || defaultFbCtaConfig;
+    let masterpackConfig = JSON.parse(localStorage.getItem('ved_study_masterpack_config')) || defaultMasterpackConfig;
+    let teaserConfig = JSON.parse(localStorage.getItem('ved_study_teaser_config')) || defaultTeaserConfig;
+    let actionBtnConfig = JSON.parse(localStorage.getItem('ved_study_action_btn_config')) || defaultActionBtnConfig;
+    let retakeBtnConfig = JSON.parse(localStorage.getItem('ved_study_retake_btn_config')) || defaultRetakeBtnConfig;
+
+    async function loadAdminConfigFromCloud() {
+      try {
+        const res = await fetch(`${WEB_APP_URL}?type=admin_config`);
+        const data = await res.json();
+        if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+          if (data.quizQuestions) {
+            quizQuestions = data.quizQuestions;
+            localStorage.setItem('ved_study_quiz_questions', JSON.stringify(quizQuestions));
+          }
+          if (data.archetypeData) {
+            archetypeData = data.archetypeData;
+            localStorage.setItem('ved_study_archetype_data', JSON.stringify(archetypeData));
+          }
+          if (data.fbCtaConfig) {
+            fbCtaConfig = data.fbCtaConfig;
+            localStorage.setItem('ved_study_fb_cta_config', JSON.stringify(fbCtaConfig));
+          }
+          if (data.masterpackConfig) {
+            masterpackConfig = data.masterpackConfig;
+            localStorage.setItem('ved_study_masterpack_config', JSON.stringify(masterpackConfig));
+          }
+          if (data.teaserConfig) {
+            teaserConfig = data.teaserConfig;
+            localStorage.setItem('ved_study_teaser_config', JSON.stringify(teaserConfig));
+          }
+          if (data.actionBtnConfig) {
+            actionBtnConfig = data.actionBtnConfig;
+            localStorage.setItem('ved_study_action_btn_config', JSON.stringify(actionBtnConfig));
+          }
+          if (data.retakeBtnConfig) {
+            retakeBtnConfig = data.retakeBtnConfig;
+            localStorage.setItem('ved_study_retake_btn_config', JSON.stringify(retakeBtnConfig));
+          }
+          console.log("☁️ Successfully synced live Admin Config");
+        }
+      } catch (err) {
+        console.warn("Could not load cloud admin config, using local storage:", err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('mode') === 'enrolled') {
+        document.getElementById('screen1').classList.add('hidden');
+      }
+
+      loadAdminConfigFromCloud().then(() => {
+        applyResultScreenConfigs();
+        if (urlParams.get('mode') === 'enrolled') {
+          startEnrolledModeFast();
+        }
+      });
+    });
+
+    /* ========================================================
+       5. FORM VALIDATION LOGIC
+       ======================================================== */
+    function validateForm() {
+      const fullName = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const university = document.getElementById('university').value.trim();
+      const yearLevel = document.getElementById('yearLevel').value;
+      const difficultSubjects = document.getElementById('difficultSubjects').value.trim();
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isEmailValid = emailRegex.test(email);
+      const emailError = document.getElementById('emailError');
+      if (email.length > 0 && !isEmailValid) {
+        emailError.classList.remove('hidden');
+      } else {
+        emailError.classList.add('hidden');
+      }
+
+      const phoneRegex = /^09\d{9}$/;
+      const isPhoneValid = phoneRegex.test(phone);
+      const phoneError = document.getElementById('phoneError');
+      if (phone.length > 0 && !isPhoneValid) {
+        phoneError.classList.remove('hidden');
+      } else {
+        phoneError.classList.add('hidden');
+      }
+
+      const isValid = fullName !== '' && isEmailValid && isPhoneValid && university !== '' && yearLevel !== '' && difficultSubjects !== '';
+      const startBtn = document.getElementById('startQuizBtn');
+      startBtn.disabled = !isValid;
+
+      if (isValid) {
+        leadDetails = { fullName, email, phone, university, yearLevel, difficultSubjects };
+      }
+    }
+
+    /* ========================================================
+       5B. ENROLLED STUDENT BYPASS MODE (URL TRIGGERED)
+       ======================================================== */
+    function startEnrolledModeFast() {
+      isEnrolledMode = true;
+      
+      leadDetails = {
+        fullName: 'Enrolled Scholar',
+        email: 'enrolled.scholar@vectored.ph',
+        phone: '09000000000',
+        university: 'VectorEd Internal',
+        yearLevel: 'Enrolled',
+        difficultSubjects: 'Internal Assessment'
+      };
+
+      prepareShuffledQuiz();
+      currentQuestionIndex = 0;
+      selectedAnswers = [null, null, null, null, null];
+
+      document.getElementById('screen1').classList.add('hidden');
+      document.getElementById('screen2').classList.remove('hidden');
+      
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ========================================================
+       6. LANGUAGE TOGGLE & SHUFFLING
+       ======================================================== */
+    function toggleLanguage() {
+      currentLang = (currentLang === 'EN') ? 'TL' : 'EN';
+      document.getElementById('langToggleText').textContent = currentLang === 'EN' ? 'EN | Taglish' : 'Taglish | EN';
+
+      if (!document.getElementById('screen2').classList.contains('hidden')) {
+        renderQuestion();
+      } else if (!document.getElementById('screen3').classList.contains('hidden')) {
+        renderResult();
+      }
+    }
+
+    function prepareShuffledQuiz() {
+      shuffledQuestions = quizQuestions.map(q => {
+        const optionsCopy = JSON.parse(JSON.stringify(q.options));
+        for (let i = optionsCopy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [optionsCopy[i], optionsCopy[j]] = [optionsCopy[j], optionsCopy[i]];
+        }
+        return { ...q, options: optionsCopy };
+      });
+    }
+
+    /* ========================================================
+       7. QUIZ NAVIGATION & SUBMIT HANDLER
+       ======================================================== */
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      validateForm();
+
+      if (document.getElementById('startQuizBtn').disabled) return;
+
+      const startBtn = document.getElementById('startQuizBtn');
+      startBtn.disabled = true;
+      document.getElementById('startBtnText').innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Initializing Diagnostic...';
+
+      leadDetails = {
+        fullName: document.getElementById('fullName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        university: document.getElementById('university').value.trim(),
+        yearLevel: document.getElementById('yearLevel').value,
+        difficultSubjects: document.getElementById('difficultSubjects').value.trim()
+      };
+
+      setTimeout(() => {
+        prepareShuffledQuiz();
+        currentQuestionIndex = 0;
+        selectedAnswers = [null, null, null, null, null];
+
+        document.getElementById('screen1').classList.add('hidden');
+        document.getElementById('screen2').classList.remove('hidden');
+        
+        renderQuestion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 400);
+    }
+
+    function renderQuestion() {
+      const q = shuffledQuestions[currentQuestionIndex];
+      const total = shuffledQuestions.length;
+
+      const progressPct = Math.round(((currentQuestionIndex + 1) / total) * 100);
+      document.getElementById('progressBar').style.width = `${progressPct}%`;
+      document.getElementById('progressPercent').textContent = `${progressPct}%`;
+      document.getElementById('quizCounterText').textContent = `Question ${currentQuestionIndex + 1} of ${total}`;
+
+      document.getElementById('questionCategory').innerHTML = q.category[currentLang] || q.category['EN'];
+      document.getElementById('questionText').innerHTML = q.questionText[currentLang] || q.questionText['EN'];
+
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+
+      const badgeLetters = ['A', 'B', 'C', 'D'];
+
+      q.options.forEach((opt, idx) => {
+        const isSelected = selectedAnswers[currentQuestionIndex] === opt.key;
+        const card = document.createElement('div');
+        card.className = `option-card p-3.5 sm:p-4 rounded-xl border bg-slate-900/90 flex items-start space-x-3 sm:space-x-3.5 text-left cursor-pointer transition-all duration-200 ${isSelected ? 'selected border-amber-500 bg-amber-500/10 shadow-md shadow-amber-500/10' : 'border-slate-700/80 hover:border-amber-500/50 hover:bg-slate-800/60'}`;
+        card.onclick = () => selectOption(opt.key);
+
+        const rawText = opt.text[currentLang] || opt.text['EN'] || '';
+        const cleanText = rawText.trim().replace(/^\n+|\n+$/g, '');
+
+        card.innerHTML = `
+          <span class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg ${isSelected ? 'bg-amber-500 text-slate-950 font-extrabold border-amber-400' : 'bg-slate-800 text-slate-300 font-bold border-slate-700'} flex items-center justify-center text-xs sm:text-sm border transition-colors mt-0.5 select-none">
+            ${badgeLetters[idx]}
+          </span>
+          <span class="flex-1 min-w-0 text-xs sm:text-sm text-slate-200 leading-normal sm:leading-relaxed font-normal formatted-content">
+            ${cleanText}
+          </span>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('prevBtn').disabled = (currentQuestionIndex === 0);
+
+      const nextBtn = document.getElementById('nextBtn');
+      const hasSelected = selectedAnswers[currentQuestionIndex] !== null;
+      nextBtn.disabled = !hasSelected;
+
+      if (currentQuestionIndex === total - 1) {
+        document.getElementById('nextBtnText').textContent = currentLang === 'EN' ? 'Finish Diagnostic 🚀' : 'Tapusin ang Diagnostic 🚀';
+        document.getElementById('nextBtnIcon').className = 'fa-solid fa-check-double ml-1';
+      } else {
+        document.getElementById('nextBtnText').textContent = currentLang === 'EN' ? 'Next Question' : 'Susunod na Tanong';
+        document.getElementById('nextBtnIcon').className = 'fa-solid fa-arrow-right ml-1';
+      }
+    }
+
+    function selectOption(key) {
+      selectedAnswers[currentQuestionIndex] = key;
+      renderQuestion();
+    }
+
+    function nextQuestion() {
+      if (selectedAnswers[currentQuestionIndex] === null) return;
+      if (currentQuestionIndex < shuffledQuestions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+      } else {
+        finishDiagnostic();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+      }
+    }
+
+    function calculateArchetype() {
+      const counts = { A: 0, B: 0, C: 0, D: 0 };
+      selectedAnswers.forEach(ans => {
+        if (ans && counts[ans] !== undefined) counts[ans]++;
+      });
+
+      for (const key of ['A', 'B', 'C', 'D']) {
+        if (counts[key] >= 3) return key;
+      }
+      const q5Answer = selectedAnswers[4];
+      if (q5Answer) return q5Answer;
+      return 'A';
+    }
+
+    function finishDiagnostic() {
+      calculatedArchetypeKey = calculateArchetype();
+
+      renderResult();
+      saveLeadToCloudBridge();
+
+      document.getElementById('screen2').classList.add('hidden');
+      document.getElementById('screen3').classList.remove('hidden');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function applyResultScreenConfigs() {
+      const fbBtn = document.getElementById('fbConnectBtn');
+      const fbText = document.getElementById('fbConnectText');
+      if (fbBtn && fbCtaConfig.url) fbBtn.href = fbCtaConfig.url;
+      if (fbText && fbCtaConfig.text) fbText.innerHTML = fbCtaConfig.text;
+
+      const mpTitle = document.getElementById('masterpackTitle');
+      const mpInst = document.getElementById('masterpackInstruction');
+      if (mpTitle && masterpackConfig.title) mpTitle.innerHTML = masterpackConfig.title;
+      if (mpInst && masterpackConfig.instruction) mpInst.innerHTML = masterpackConfig.instruction;
+
+      const tTitle = document.getElementById('teaserTitle');
+      const tText = document.getElementById('teaserText');
+      if (tTitle && teaserConfig.title) tTitle.innerHTML = teaserConfig.title;
+      if (tText && teaserConfig.text) tText.innerHTML = teaserConfig.text;
+
+      const actBtn = document.getElementById('actionBtn');
+      const actText = document.getElementById('actionBtnText');
+      if (actBtn && actionBtnConfig.url) actBtn.href = actionBtnConfig.url;
+      if (actText && actionBtnConfig.text) actText.innerHTML = actionBtnConfig.text;
+
+      const retBtn = document.getElementById('retakeBtn');
+      if (retBtn && retakeBtnConfig.text) retBtn.innerHTML = `<i class="fa-solid fa-rotate-left mr-1"></i> ${retakeBtnConfig.text}`;
+    }
+
+    function renderResult() {
+      const data = archetypeData[calculatedArchetypeKey] || archetypeData['A'];
+
+      document.getElementById('archetypeEmoji').textContent = data.emoji;
+      document.getElementById('archetypeTitle').innerHTML = data.title[currentLang];
+      document.getElementById('archetypeSummary').innerHTML = data.summary[currentLang];
+
+      document.getElementById('tech1Title').innerHTML = data.tech1Title[currentLang];
+      document.getElementById('tech1Desc').innerHTML = data.tech1Desc[currentLang];
+      
+      document.getElementById('tech2Title').innerHTML = data.tech2Title[currentLang];
+      document.getElementById('tech2Desc').innerHTML = data.tech2Desc[currentLang];
+
+      applyResultScreenConfigs();
+    }
+
+    /* ========================================================
+       8. SERVERLESS CLOUD SYNC & GSHEETS DISPATCH
+       ======================================================== */
+    async function saveLeadToCloudBridge() {
+      const payload = {
+        fullName: leadDetails.fullName,
+        email: leadDetails.email,
+        phone: leadDetails.phone,
+        university: leadDetails.university,
+        yearLevel: leadDetails.yearLevel,
+        subjects: leadDetails.difficultSubjects,
+        archetype: calculatedArchetypeKey && archetypeData[calculatedArchetypeKey] ? archetypeData[calculatedArchetypeKey].title.EN : 'Completed Diagnostic'
+      };
+
+      try {
+        const formParams = new URLSearchParams();
+        formParams.append("fullName", payload.fullName || "");
+        formParams.append("email", payload.email || "");
+        formParams.append("phone", payload.phone || "");
+        formParams.append("university", payload.university || "");
+        formParams.append("yearLevel", payload.yearLevel || "");
+        formParams.append("subjects", payload.subjects || "");
+        formParams.append("archetype", payload.archetype || "");
+
+        await fetch(WEB_APP_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: formParams.toString()
+        });
+      } catch (err) {
+        console.error("Cloud lead sync error:", err);
+      }
+    }
+
+    async function saveAdminConfigToCloud(configObj) {
+      const statusEl = document.getElementById('adminSaveStatus');
+      if (statusEl) {
+        statusEl.classList.remove('hidden');
+        statusEl.className = "text-xs font-mono text-amber-400";
+        statusEl.textContent = "Syncing config to Google Sheets...";
+      }
+
+      try {
+        const formParams = new URLSearchParams();
+        formParams.append("formType", "admin_config");
+        formParams.append("config", JSON.stringify(configObj));
+
+        await fetch(WEB_APP_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: formParams.toString()
+        });
+
+        if (statusEl) {
+          statusEl.className = "text-xs font-mono text-emerald-400";
+          statusEl.textContent = "✓ Saved to Google Sheets!";
+        }
+        alert("✅ Live diagnostic config updated locally & synced to Google Sheets!");
+      } catch (err) {
+        if (statusEl) {
+          statusEl.className = "text-xs font-mono text-rose-400";
+          statusEl.textContent = "Failed to sync config to Cloud.";
+        }
+        alert("✅ Saved locally! (Note: Cloud sync error occurred)");
+      }
+    }
+
+    async function testCloudConnection() {
+      const statusEl = document.getElementById('adminTestStatus');
+      statusEl.classList.remove('hidden');
+      statusEl.className = "text-xs font-mono text-amber-400";
+      statusEl.textContent = "Sending test ping payload...";
+
+      const formParams = new URLSearchParams();
+      formParams.append("fullName", "ADMIN PING TEST");
+      formParams.append("email", "admin.test@vectored.ph");
+      formParams.append("phone", "09999999999");
+      formParams.append("university", "VectorEd System Audit");
+      formParams.append("yearLevel", "Admin System");
+      formParams.append("subjects", "Cloud Sync Test Connection");
+      formParams.append("archetype", "System Audit ⚡");
+
+      try {
+        await fetch(WEB_APP_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: formParams.toString()
+        });
+
+        statusEl.className = "text-xs font-mono text-emerald-400";
+        statusEl.textContent = "✓ Test lead entry sent! Check Google Sheets Leads tab.";
+      } catch (err) {
+        statusEl.className = "text-xs font-mono text-rose-400";
+        statusEl.textContent = "Failed to send test ping.";
+      }
+    }
+
+    /* ========================================================
+       9. UTILITIES & ADMIN PORTAL
+       ======================================================== */
+    function copyAndOpenFB(event) {
+      const fbUrl = actionBtnConfig.url || "https://www.facebook.com/share/1NnxduVw9U/";
+
+      try {
+        const tempInput = document.createElement("textarea");
+        tempInput.value = "DIAGNOSTICS";
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+      } catch (e) {}
+
+      const copyToast = document.getElementById("copyToast");
+      if (copyToast) {
+        copyToast.classList.remove("hidden");
+      }
+
+      if (!event || !event.target.getAttribute('href')) {
+        if (event && event.preventDefault) event.preventDefault();
+        const win = window.open(fbUrl, "_blank", "noopener,noreferrer");
+        if (!win || win.closed || typeof win.closed === "undefined") {
+          if (window.top && window.top !== window.self) {
+            window.top.location.href = fbUrl;
+          } else {
+            window.location.href = fbUrl;
+          }
+        }
+      }
+    }
+
+    function resetDiagnostic() {
+      currentQuestionIndex = 0;
+      selectedAnswers = [null, null, null, null, null];
+      shuffledQuestions = [];
+      calculatedArchetypeKey = null;
+
+      document.getElementById('screen3').classList.add('hidden');
+
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('mode') === 'enrolled') {
+        startEnrolledModeFast();
+      } else {
+        isEnrolledMode = false;
+        document.getElementById('leadForm').reset();
+        document.getElementById('startBtnText').innerHTML = 'Start Diagnostic Quiz 🚀';
+        validateForm();
+        document.getElementById('screen1').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function openAdminModal() {
+      document.getElementById('adminModal').classList.remove('hidden');
+      if (isAdminAuthenticated) {
+        document.getElementById('adminLoginView').classList.add('hidden');
+        document.getElementById('adminDashboardView').classList.remove('hidden');
+        renderAdminQuestionsEditor();
+      } else {
+        document.getElementById('adminLoginView').classList.remove('hidden');
+        document.getElementById('adminDashboardView').classList.add('hidden');
+      }
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminModal').classList.add('hidden');
+    }
+
+    function authenticateAdmin() {
+      const inputPw = document.getElementById('adminPasswordInput').value.trim();
+      if (inputPw === adminPassword) {
+        isAdminAuthenticated = true;
+        document.getElementById('adminAuthError').classList.add('hidden');
+        document.getElementById('adminLoginView').classList.add('hidden');
+        document.getElementById('adminDashboardView').classList.remove('hidden');
+        renderAdminQuestionsEditor();
+      } else {
+        document.getElementById('adminAuthError').classList.remove('hidden');
+      }
+    }
+
+    function verifySecurityQuestion() {
+      const answer = document.getElementById('secQuestionAnswer').value.trim().toLowerCase();
+      const validAnswers = ['jan 01, 2025', 'jan 1, 2025', 'january 1, 2025', 'january 01, 2025'];
+
+      if (validAnswers.includes(answer)) {
+        document.getElementById('secQuestionError').classList.add('hidden');
+        document.getElementById('secQuestionStep').classList.add('hidden');
+        document.getElementById('changePwStep').classList.remove('hidden');
+      } else {
+        document.getElementById('secQuestionError').classList.remove('hidden');
+      }
+    }
+
+    function saveNewPassword() {
+      const newPw = document.getElementById('newAdminPassword').value.trim();
+      if (newPw.length < 4) {
+        alert("Password must be at least 4 characters long.");
+        return;
+      }
+      adminPassword = newPw;
+      localStorage.setItem('ved_study_admin_pw', newPw);
+
+      document.getElementById('pwChangeSuccess').classList.remove('hidden');
+      setTimeout(() => {
+        document.getElementById('pwChangeSuccess').classList.add('hidden');
+      }, 3000);
+    }
+
+    function insertFormattingTag(fieldId, tagType) {
+      const el = document.getElementById(fieldId);
+      if (!el) return;
+      const start = el.selectionStart;
+      const end = el.selectionEnd;
+      const text = el.value;
+      const selected = text.substring(start, end);
+      let formatted = "";
+      if (tagType === 'bold') formatted = `<b>${selected || 'bold text'}</b>`;
+      else if (tagType === 'italic') formatted = `<i>${selected || 'italic text'}</i>`;
+      else if (tagType === 'gold') formatted = `<span class="text-amber-400 font-bold">${selected || 'gold text'}</span>`;
+      else if (tagType === 'break') formatted = `\n\n`;
+
+      el.value = text.substring(0, start) + formatted + text.substring(end);
+      el.focus();
+    }
+
+    function renderAdminQuestionsEditor() {
+      const container = document.getElementById('adminQuestionsEditor');
+      container.innerHTML = '';
+
+      quizQuestions.forEach((q, idx) => {
+        const qBox = document.createElement('div');
+        qBox.className = 'bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-3';
+        const optionLabels = { A: 'Option A (Overwhelmed)', B: 'Option B (Passive)', C: 'Option C (Struggler)', D: 'Option D (Panicker)' };
+        let optionsHTML = '';
+
+        q.options.forEach((opt, optIdx) => {
+          const optEnId = `admin_opt_${idx}_${optIdx}_en`;
+          const optTlId = `admin_opt_${idx}_${optIdx}_tl`;
+          optionsHTML += `
+            <div class="p-2.5 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1.5">
+              <div class="text-[11px] font-bold text-amber-500">${optionLabels[opt.key] || 'Option ' + opt.key}</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <div class="flex justify-between items-center mb-1">
+                    <label class="block text-[9px] text-slate-400 uppercase font-semibold">EN Copy</label>
+                    <div class="space-x-1">
+                      <button type="button" onclick="insertFormattingTag('${optEnId}','bold')" class="px-1.5 py-0.5 text-[9px] bg-slate-800 text-amber-400 rounded hover:bg-slate-700">Bold</button>
+                      <button type="button" onclick="insertFormattingTag('${optEnId}','italic')" class="px-1.5 py-0.5 text-[9px] bg-slate-800 text-amber-400 rounded hover:bg-slate-700">Italic</button>
+                    </div>
+                  </div>
+                  <textarea id="${optEnId}" rows="2" class="w-full px-2 py-1 bg-slate-950 border border-slate-700 rounded text-[11px] text-white focus:outline-none focus:border-amber-500">${opt.text.EN}</textarea>
+                </div>
+                <div>
+                  <div class="flex justify-between items-center mb-1">
+                    <label class="block text-[9px] text-slate-400 uppercase font-semibold">Taglish Copy</label>
+                    <div class="space-x-1">
+                      <button type="button" onclick="insertFormattingTag('${optTlId}','bold')" class="px-1.5 py-0.5 text-[9px] bg-slate-800 text-amber-400 rounded hover:bg-slate-700">Bold</button>
+                      <button type="button" onclick="insertFormattingTag('${optTlId}','italic')" class="px-1.5 py-0.5 text-[9px] bg-slate-800 text-amber-400 rounded hover:bg-slate-700">Italic</button>
+                    </div>
+                  </div>
+                  <textarea id="${optTlId}" rows="2" class="w-full px-2 py-1 bg-slate-950 border border-slate-700 rounded text-[11px] text-white focus:outline-none focus:border-amber-500">${opt.text.TL || opt.text.EN}</textarea>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        qBox.innerHTML = `
+          <div class="font-bold text-amber-400 text-xs flex justify-between items-center border-b border-slate-800 pb-1.5">
+            <span>Question ${idx + 1} Editor</span>
+            <span class="text-[10px] text-slate-400 font-normal">ID: ${q.id}</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Category Title (EN)</label>
+              <input type="text" id="admin_cat_en_${idx}" value="${q.category.EN}" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+              <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Category Title (Taglish)</label>
+              <input type="text" id="admin_cat_tl_${idx}" value="${q.category.TL || q.category.EN}" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Question Prompt (EN)</label>
+              <textarea id="admin_qtext_en_${idx}" rows="2" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">${q.questionText.EN}</textarea>
+            </div>
+            <div>
+              <label class="block text-[10px] text-slate-400 uppercase font-semibold mb-0.5">Question Prompt (Taglish)</label>
+              <textarea id="admin_qtext_tl_${idx}" rows="2" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">${q.questionText.TL || q.questionText.EN}</textarea>
+            </div>
+          </div>
+          <div class="space-y-2 pt-1">
+            <div class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Answer Choices (Options A, B, C, D)</div>
+            ${optionsHTML}
+          </div>
+        `;
+        container.appendChild(qBox);
+      });
+
+      renderAdminArchetypeEditor();
+      renderAdminCtasEditor();
+    }
+
+    function renderAdminArchetypeEditor() {
+      const container = document.getElementById('adminArchetypeEditor');
+      container.innerHTML = '';
+
+      const keys = ['A', 'B', 'C', 'D'];
+      keys.forEach(key => {
+        const arch = archetypeData[key];
+        const archBox = document.createElement('div');
+        archBox.className = 'bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2.5';
+
+        const sumEnId = `admin_arch_sum_en_${key}`;
+        const sumTlId = `admin_arch_sum_tl_${key}`;
+        
+        const t1TitleEnId = `admin_arch_t1title_en_${key}`;
+        const t1TitleTlId = `admin_arch_t1title_tl_${key}`;
+        const t1DescEnId = `admin_arch_t1desc_en_${key}`;
+        const t1DescTlId = `admin_arch_t1desc_tl_${key}`;
+
+        const t2TitleEnId = `admin_arch_t2title_en_${key}`;
+        const t2TitleTlId = `admin_arch_t2title_tl_${key}`;
+        const t2DescEnId = `admin_arch_t2desc_en_${key}`;
+        const t2DescTlId = `admin_arch_t2desc_tl_${key}`;
+
+        archBox.innerHTML = `
+          <div class="font-bold text-amber-400 text-xs border-b border-slate-800 pb-1 flex items-center justify-between">
+            <span>${arch.title.EN}</span>
+            <span class="text-[10px] text-slate-400 font-mono">Archetype Key: ${key}</span>
+          </div>
+          
+          <!-- SUMMARY EDITORS -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="block text-[10px] text-slate-400 uppercase font-semibold">Summary (EN)</label>
+                <div class="space-x-1">
+                  <button type="button" onclick="insertFormattingTag('${sumEnId}','bold')" class="px-1.5 py-0.5 text-[9px] bg-slate-800 text-amber-400 rounded hover:bg-slate-700">Bold</button>
+                  <button type="button" onclick="insertFormattingTag('${sumEnId}','italic')" class="px-1.5 py-0.5 text-[9px] bg-slate-800 text-amber-400 rounded hover:bg-slate-700">Italic</button>
+                </div>
+              </div>
+              <textarea id="${sumEnId}" rows="3" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">${arch.summary.EN}</textarea>
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="block text-[10px] text-slate-400 uppercase font-semibold">Summary (Taglish)</label>
+                <div class="space-x-1">
+                  <button type="button" onclick="insertFormattingTag('${sumTlId}','bold')" class="px-1.5 py-0.5 text-[9px] bg-slate-800 text-amber-400 rounded hover:bg-slate-700">Bold</button>
+                  <button type="button" onclick="insertFormattingTag('${sumTlId}','italic')" class="px-1.5 py-0.5 text-[9px] bg-slate-800 text-amber-400 rounded hover:bg-slate-700">Italic</button>
+                </div>
+              </div>
+              <textarea id="${sumTlId}" rows="3" class="w-full px-2.5 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-amber-500">${arch.summary.TL}</textarea>
+            </div>
+          </div>
+
+          <!-- TECHNIQUE 1 EDITORS -->
+          <div class="border-t border-slate-800/80 pt-2 mt-2">
+            <h5 class="text-[10px] text-slate-300 font-bold mb-2">Column 1: Strategy</h5>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
+              <input type="text" id="${t1TitleEnId}" value="${arch.tech1Title.EN}" placeholder="Tech 1 Title (EN)" class="w-full px-2 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white">
+              <input type="text" id="${t1TitleTlId}" value="${arch.tech1Title.TL}" placeholder="Tech 1 Title (TL)" class="w-full px-2 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white">
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <textarea id="${t1DescEnId}" rows="2" placeholder="Tech 1 Desc (EN)" class="w-full px-2 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:border-amber-500">${arch.tech1Desc.EN}</textarea>
+              <textarea id="${t1DescTlId}" rows="2" placeholder="Tech 1 Desc (TL)" class="w-full px-2 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:border-amber-500">${arch.tech1Desc.TL}</textarea>
+            </div>
+          </div>
+
+          <!-- TECHNIQUE 2 EDITORS -->
+          <div class="border-t border-slate-800/80 pt-2 mt-2">
+            <h5 class="text-[10px] text-slate-300 font-bold mb-2">Column 2: Strategy</h5>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
+              <input type="text" id="${t2TitleEnId}" value="${arch.tech2Title.EN}" placeholder="Tech 2 Title (EN)" class="w-full px-2 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white">
+              <input type="text" id="${t2TitleTlId}" value="${arch.tech2Title.TL}" placeholder="Tech 2 Title (TL)" class="w-full px-2 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white">
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <textarea id="${t2DescEnId}" rows="2" placeholder="Tech 2 Desc (EN)" class="w-full px-2 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:border-amber-500">${arch.tech2Desc.EN}</textarea>
+              <textarea id="${t2DescTlId}" rows="2" placeholder="Tech 2 Desc (TL)" class="w-full px-2 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:border-amber-500">${arch.tech2Desc.TL}</textarea>
+            </div>
+          </div>
+        `;
+        container.appendChild(archBox);
+      });
+    }
+
+    function renderAdminCtasEditor() {
+      document.getElementById('admin_fb_connect_text').value = fbCtaConfig.text;
+      document.getElementById('admin_fb_connect_url').value = fbCtaConfig.url;
+
+      document.getElementById('admin_masterpack_title').value = masterpackConfig.title;
+      document.getElementById('admin_masterpack_instruction').value = masterpackConfig.instruction;
+
+      document.getElementById('admin_teaser_title').value = teaserConfig.title;
+      document.getElementById('admin_teaser_text').value = teaserConfig.text;
+
+      document.getElementById('admin_action_btn_text').value = actionBtnConfig.text;
+      document.getElementById('admin_action_btn_url').value = actionBtnConfig.url;
+
+      document.getElementById('admin_retake_btn_text').value = retakeBtnConfig.text;
+    }
+
+    function saveAdminContentChanges() {
+      quizQuestions.forEach((q, idx) => {
+        const catEnInput = document.getElementById(`admin_cat_en_${idx}`);
+        const catTlInput = document.getElementById(`admin_cat_tl_${idx}`);
+        const qTextEnInput = document.getElementById(`admin_qtext_en_${idx}`);
+        const qTextTlInput = document.getElementById(`admin_qtext_tl_${idx}`);
+
+        if (catEnInput) q.category.EN = catEnInput.value.trim();
+        if (catTlInput) q.category.TL = catTlInput.value.trim();
+        if (qTextEnInput) q.questionText.EN = qTextEnInput.value.trim();
+        if (qTextTlInput) q.questionText.TL = qTextTlInput.value.trim();
+
+        q.options.forEach((opt, optIdx) => {
+          const optEnInput = document.getElementById(`admin_opt_${idx}_${optIdx}_en`);
+          const optTlInput = document.getElementById(`admin_opt_${idx}_${optIdx}_tl`);
+          if (optEnInput) opt.text.EN = optEnInput.value.trim();
+          if (optTlInput) opt.text.TL = optTlInput.value.trim();
+        });
+      });
+
+      ['A', 'B', 'C', 'D'].forEach(key => {
+        const sumEn = document.getElementById(`admin_arch_sum_en_${key}`);
+        const sumTl = document.getElementById(`admin_arch_sum_tl_${key}`);
+        
+        const t1TitleEn = document.getElementById(`admin_arch_t1title_en_${key}`);
+        const t1TitleTl = document.getElementById(`admin_arch_t1title_tl_${key}`);
+        const t1DescEn = document.getElementById(`admin_arch_t1desc_en_${key}`);
+        const t1DescTl = document.getElementById(`admin_arch_t1desc_tl_${key}`);
+        
+        const t2TitleEn = document.getElementById(`admin_arch_t2title_en_${key}`);
+        const t2TitleTl = document.getElementById(`admin_arch_t2title_tl_${key}`);
+        const t2DescEn = document.getElementById(`admin_arch_t2desc_en_${key}`);
+        const t2DescTl = document.getElementById(`admin_arch_t2desc_tl_${key}`);
+
+        if (sumEn && archetypeData[key]) archetypeData[key].summary.EN = sumEn.value.trim();
+        if (sumTl && archetypeData[key]) archetypeData[key].summary.TL = sumTl.value.trim();
+
+        if (t1TitleEn && archetypeData[key]) archetypeData[key].tech1Title.EN = t1TitleEn.value.trim();
+        if (t1TitleTl && archetypeData[key]) archetypeData[key].tech1Title.TL = t1TitleTl.value.trim();
+        if (t1DescEn && archetypeData[key]) archetypeData[key].tech1Desc.EN = t1DescEn.value.trim();
+        if (t1DescTl && archetypeData[key]) archetypeData[key].tech1Desc.TL = t1DescTl.value.trim();
+
+        if (t2TitleEn && archetypeData[key]) archetypeData[key].tech2Title.EN = t2TitleEn.value.trim();
+        if (t2TitleTl && archetypeData[key]) archetypeData[key].tech2Title.TL = t2TitleTl.value.trim();
+        if (t2DescEn && archetypeData[key]) archetypeData[key].tech2Desc.EN = t2DescEn.value.trim();
+        if (t2DescTl && archetypeData[key]) archetypeData[key].tech2Desc.TL = t2DescTl.value.trim();
+      });
+
+      fbCtaConfig.text = document.getElementById('admin_fb_connect_text').value.trim();
+      fbCtaConfig.url = document.getElementById('admin_fb_connect_url').value.trim();
+
+      masterpackConfig.title = document.getElementById('admin_masterpack_title').value.trim();
+      masterpackConfig.instruction = document.getElementById('admin_masterpack_instruction').value.trim();
+
+      teaserConfig.title = document.getElementById('admin_teaser_title').value.trim();
+      teaserConfig.text = document.getElementById('admin_teaser_text').value.trim();
+
+      actionBtnConfig.text = document.getElementById('admin_action_btn_text').value.trim();
+      actionBtnConfig.url = document.getElementById('admin_action_btn_url').value.trim();
+
+      retakeBtnConfig.text = document.getElementById('admin_retake_btn_text').value.trim();
+
+      const fullConfig = {
+        quizQuestions: quizQuestions,
+        archetypeData: archetypeData,
+        fbCtaConfig: fbCtaConfig,
+        masterpackConfig: masterpackConfig,
+        teaserConfig: teaserConfig,
+        actionBtnConfig: actionBtnConfig,
+        retakeBtnConfig: retakeBtnConfig
+      };
+
+      localStorage.setItem('ved_study_quiz_questions', JSON.stringify(quizQuestions));
+      localStorage.setItem('ved_study_archetype_data', JSON.stringify(archetypeData));
+      localStorage.setItem('ved_study_fb_cta_config', JSON.stringify(fbCtaConfig));
+      localStorage.setItem('ved_study_masterpack_config', JSON.stringify(masterpackConfig));
+      localStorage.setItem('ved_study_teaser_config', JSON.stringify(teaserConfig));
+      localStorage.setItem('ved_study_action_btn_config', JSON.stringify(actionBtnConfig));
+      localStorage.setItem('ved_study_retake_btn_config', JSON.stringify(retakeBtnConfig));
+
+      saveAdminConfigToCloud(fullConfig);
+      closeAdminModal();
+    }
+
+    function resetContentToDefault() {
+      if (confirm("Are you sure you want to reset all questions and archetype details to default?")) {
+        quizQuestions = JSON.parse(JSON.stringify(defaultQuizQuestions));
+        archetypeData = JSON.parse(JSON.stringify(defaultArchetypeData));
+        fbCtaConfig = JSON.parse(JSON.stringify(defaultFbCtaConfig));
+        masterpackConfig = JSON.parse(JSON.stringify(defaultMasterpackConfig));
+        teaserConfig = JSON.parse(JSON.stringify(defaultTeaserConfig));
+        actionBtnConfig = JSON.parse(JSON.stringify(defaultActionBtnConfig));
+        retakeBtnConfig = JSON.parse(JSON.stringify(defaultRetakeBtnConfig));
+
+        localStorage.removeItem('ved_study_quiz_questions');
+        localStorage.removeItem('ved_study_archetype_data');
+        localStorage.removeItem('ved_study_fb_cta_config');
+        localStorage.removeItem('ved_study_masterpack_config');
+        localStorage.removeItem('ved_study_teaser_config');
+        localStorage.removeItem('ved_study_action_btn_config');
+        localStorage.removeItem('ved_study_retake_btn_config');
+
+        const fullConfig = {
+          quizQuestions: quizQuestions,
+          archetypeData: archetypeData,
+          fbCtaConfig: fbCtaConfig,
+          masterpackConfig: masterpackConfig,
+          teaserConfig: teaserConfig,
+          actionBtnConfig: actionBtnConfig,
+          retakeBtnConfig: retakeBtnConfig
+        };
+
+        saveAdminConfigToCloud(fullConfig);
+        renderAdminQuestionsEditor();
+      }
+    }
+  </script>
+</body>
+</html>
